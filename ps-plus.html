@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PS Plus Subscriptions - Krazykross Games</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-content">
+                <a href="index.html" class="logo">
+                    <img src="https://i.ibb.co/hR0Wv19W/Krazy-Kross-Games-LOGO-2.png" alt="Logo" class="logo-image">
+                    <span class="logo-text">KRAZYKROSS</span>
+                    <span class="logo-subtitle">GAMES</span>
+                </a>
+                <div class="nav-links">
+                    <a href="index.html" class="nav-link">Home</a>
+                    <a href="games.html" class="nav-link">Games</a>
+                    <a href="ps-plus.html" class="nav-link active">PS Plus</a>
+                    <a href="about.html" class="nav-link">About</a>
+                    <a href="contact.html" class="nav-link">Contact</a>
+                    <a href="faq.html" class="nav-link">FAQ</a>
+                </div>
+                <div class="nav-actions">
+                    <button class="btn-search">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="11" cy="11" r="8"></circle>
+                            <path d="m21 21-4.35-4.35"></path>
+                        </svg>
+                    </button>
+                    <a href="checkout.html" class="btn-cart">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="9" cy="21" r="1"></circle>
+                            <circle cx="20" cy="21" r="1"></circle>
+                            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+                        </svg>
+                        <span class="cart-badge">0</span>
+                    </a>
+                </div>
+                <button class="mobile-menu-btn">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <section class="page-header ps-plus-header">
+        <div class="container">
+            <div class="ps-plus-logo-container">
+            </div>
+            <h1 class="page-title">PlayStation Plus Subscriptions</h1>
+            <p class="page-subtitle">Unlock hundreds of games with PS Plus Extra & Deluxe memberships</p>
+        </div>
+    </section>
+
+    <!-- Subscription Tiers -->
+    <section class="subscriptions-section">
+        <div class="container">
+            
+            <!-- Info Banner -->
+            <div class="info-banner">
+                <div class="info-icon">ℹ️</div>
+                <div class="info-content">
+                    <h3>PS PLUS Shared ACCESS</h3>
+                    <p>Get instant access to all PS Plus benefits. Your subscription will be activated on a shared primary PS5 account, giving you full access to the game library and online features.</p>
+                </div>
+            </div>
+
+            <!-- Subscription Cards Grid -->
+            <div class="subscriptions-grid" id="subscriptions-grid">
+                <!-- Cards will be loaded here by JavaScript -->
+            </div>
+
+            <!-- Benefits Section -->
+            <div class="benefits-section">
+                <h2 class="section-title">What's Included</h2>
+                
+                <div class="benefits-grid">
+                    <div class="benefit-card">
+                        <div class="benefit-icon">🎮</div>
+                        <h3>PS PLUS Extra</h3>
+                        <ul class="benefit-list">
+                            <li>✓ 400+ PS5 & PS4 games</li>
+                            <li>✓ Online Multiplayer</li>
+                            <li>✓ Monthly Games</li>
+                            <li>✓ Exclusive discounts</li>
+                            <li>✓ Cloud storage 100GB</li>
+                        </ul>
+                    </div>
+
+                    <div class="benefit-card premium">
+                        <div class="benefit-icon">👑</div>
+                        <h3>PS PLUS Deluxe</h3>
+                        <ul class="benefit-list">
+                            <li>✓ Everything in Extra</li>
+                            <li>✓ 340+ classic games</li>
+                            <li>✓ Game trials</li>
+                            <li>✓ Cloud streaming</li>
+                            <li>✓ Premium support</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Popular Games Section -->
+            <div class="popular-games-section">
+                <h2 class="section-title">Popular Games Available</h2>
+                <div class="popular-games-grid">
+                    <div class="popular-game-item">
+                        <div class="popular-game-icon">🎯</div>
+                        <span>Spider-Man Miles Morales</span>
+                    </div>
+                    <div class="popular-game-item">
+                        <div class="popular-game-icon">⚔️</div>
+                        <span>Ghost of Tsushima</span>
+                    </div>
+                    <div class="popular-game-item">
+                        <div class="popular-game-icon">🏹</div>
+                        <span>Horizon Forbidden West</span>
+                    </div>
+                    <div class="popular-game-item">
+                        <div class="popular-game-icon">🎮</div>
+                        <span>God of War Ragnarök</span>
+                    </div>
+                    <div class="popular-game-item">
+                        <div class="popular-game-icon">🌟</div>
+                        <span>Returnal</span>
+                    </div>
+                    <div class="popular-game-item">
+                        <div class="popular-game-icon">💀</div>
+                        <span>Demon's Souls</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- FAQ Section -->
+            <div class="ps-plus-faq">
+                <h2 class="section-title">Frequently Asked Questions</h2>
+                
+                <div class="faq-item">
+                    <div class="faq-question-ps">
+                        <h4>How does the shared primary account work?</h4>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer-ps">
+                        <p>You'll receive login credentials for a PS5 account that's set as your console's primary account. This gives you full access to all PS Plus benefits and games on your PS5.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question-ps">
+                        <h4>Can I play online with my own account?</h4>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer-ps">
+                        <p>Yes! Once the shared account is set as primary on your PS5, all accounts on that console can play online and access the PS Plus game library.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question-ps">
+                        <h4>What happens when the subscription expires?</h4>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer-ps">
+                        <p>When your rental period ends, you can renew to continue access. We'll send you a reminder before expiration.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question-ps">
+                        <h4>Is this account sharing legal?</h4>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer-ps">
+                        <p>Yes, PlayStation's primary console feature is designed to allow game and subscription sharing within households.</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <div class="footer-logo">
+                        <img src="https://i.ibb.co/hR0Wv19W/Krazy-Kross-Games-LOGO-2.png" alt="Logo" class="logo-image">
+                        <span class="logo-text">KRAZYKROSS GAMES</span>
+                    </div>
+                    <p class="footer-description">Your trusted source for PlayStation digital games and subscriptions.</p>
+                </div>
+                
+                <div class="footer-column">
+                    <h4 class="footer-heading">Quick Links</h4>
+                    <ul class="footer-links">
+                        <li><a href="games.html">Browse Games</a></li>
+                        <li><a href="ps-plus.html">PS Plus</a></li>
+                        <li><a href="index.html#deals">Special Offers</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h4 class="footer-heading">Support</h4>
+                    <ul class="footer-links">
+                        <li><a href="faq.html">FAQ</a></li>
+                        <li><a href="contact.html">Help Center</a></li>
+                        <li><a href="contact.html">Contact Us</a></li>
+                        <li><a href="#">Refund Policy</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h4 class="footer-heading">Legal</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">Cookie Policy</a></li>
+                        <li><a href="#">Disclaimer</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2026 Krazykross Games. All rights reserved.</p>
+                <p class="footer-disclaimer">PlayStation and PS Plus are registered trademarks of Sony Interactive Entertainment Inc.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="script.js"></script>
+
+<script src="ps-plus-data.js"></script>      <!-- 1. Data -->
+<script src="ps-plus-stock.js"></script>     <!-- 2. Stock (fixed!) -->
+<script src="ps-plus-sheets-integration.js"></script>
+<script src="ps-plus.js"></script>           <!-- 3. Functionality -->
+
+    <!-- WhatsApp Floating Button -->
+    <a href="https://wa.me/94742394594?text=Hello!%20I%20have%20a%20question%20about%20PS%20Plus" 
+       class="whatsapp-float" 
+       target="_blank"
+       aria-label="Chat on WhatsApp">
+        <svg width="60" height="60" viewBox="0 0 60 60">
+            <circle cx="30" cy="30" r="28" fill="#25D366"/>
+            <path fill="white" d="M30.667 15.333c-8.284 0-15 6.716-15 15 0 2.75.742 5.324 2.036 7.542l-2.119 6.358 6.545-2.083c2.136 1.167 4.583 1.836 7.204 1.836 8.284 0 15-6.716 15-15s-6.716-15-15-15zm8.542 21.208c-.354.997-2.083 1.917-2.875 2.042-.75.125-1.708.208-2.75-.167-1.042-.375-2.375-.875-4.125-1.708-3.709-1.792-6.125-5.542-6.292-5.792-.167-.25-1.375-1.792-1.375-3.417s.875-2.417 1.167-2.75c.292-.333.667-.417.875-.417.208 0 .417 0 .583.008.188.009.438-.071.688.521.25.593.875 2.125.958 2.292.083.167.125.375.042.583-.083.208-.167.292-.333.458-.167.167-.333.375-.458.5-.167.125-.333.292-.167.542.167.25.75 1.25 1.625 2.042 1.125 1 2.083 1.333 2.375 1.458.292.125.458.125.625-.042.167-.167.708-.833.917-1.125.208-.292.417-.25.667-.167.25.083 1.583.75 1.833.875.25.125.417.167.458.292.083.125.083.708-.167 1.375z"/>
+        </svg>
+    </a>
+
+    <style>
+    .whatsapp-float {
+        position: fixed;
+        bottom: 30px;
+        right: 30px;
+        z-index: 999999;
+        transition: transform 0.3s ease;
+        filter: drop-shadow(0 4px 12px rgba(37, 211, 102, 0.4));
+    }
+
+    .whatsapp-float:hover {
+        transform: scale(1.1);
+    }
+
+    @media (max-width: 768px) {
+        .whatsapp-float {
+            bottom: 20px;
+            right: 20px;
+        }
+        
+        .whatsapp-float svg {
+            width: 50px;
+            height: 50px;
+        }
+    }
+    </style>
+
+  
+  
+</body>
+</html>

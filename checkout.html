@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout - Krazykross Games</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-content">
+                <a href="index.html" class="logo">
+                   <img src="https://i.ibb.co/hR0Wv19W/Krazy-Kross-Games-LOGO-2.png" alt="Logo" class="logo-image">
+                    <span class="logo-text">KRAZYKROSS</span>
+                    <span class="logo-subtitle">GAMES</span>
+                </a>
+                <div class="nav-links">
+                    <a href="index.html" class="nav-link">Home</a>
+                    <a href="games.html" class="nav-link">Games</a>
+                    <a href="ps-plus.html" class="nav-link">PS Plus</a>
+                    <a href="about.html" class="nav-link">About</a>
+                    <a href="contact.html" class="nav-link">Contact</a>
+                    <a href="faq.html" class="nav-link">FAQ</a>
+                </div>
+                <div class="nav-actions">
+                    <button class="btn-search">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="11" cy="11" r="8"></circle>
+                            <path d="m21 21-4.35-4.35"></path>
+                        </svg>
+                    </button>
+
+                  <a href="https://krazykrossg.netlify.app/checkout.html" class="btn-cart">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="9" cy="21" r="1"></circle>
+        <circle cx="20" cy="21" r="1"></circle>
+        <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+    </svg>
+    <span class="cart-badge">0</span>
+</a>
+
+                </div>
+                <button class="mobile-menu-btn">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <h1 class="page-title">Checkout</h1>
+            <p class="page-subtitle">Complete your order with secure bank transfer</p>
+        </div>
+    </section>
+
+    <!-- Checkout Section -->
+    <section class="checkout-section">
+        <div class="container">
+            <div class="checkout-grid">
+                <!-- Order Form -->
+                <div class="checkout-form-wrapper">
+                    <h2 class="checkout-heading">
+                        <span class="step-number">1</span>
+                        Your Information
+                    </h2>
+                    <form id="checkout-form" class="checkout-form">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label">First Name *</label>
+                                <input type="text" name="firstName" class="form-input" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Last Name *</label>
+                                <input type="text" name="lastName" class="form-input" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Email Address *</label>
+                            <input type="email" name="email" class="form-input" placeholder="your@email.com" required>
+                            <span class="form-help">Game codes will be sent to this email</span>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Phone Number *</label>
+                            <input type="tel" name="phone" class="form-input" placeholder="+1 (555) 000-0000" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Country *</label>
+                            <select name="country" class="form-input" required>
+                                <option value="">Select your country</option>
+                                <option value="US">United States</option>
+                                <option value="UK">United Kingdom</option>
+                                <option value="CA">Canada</option>
+                                <option value="AU">Australia</option>
+                                <option value="LK">Sri Lanka</option>
+                                <option value="IN">India</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Additional Notes (Optional)</label>
+                            <textarea name="notes" class="form-input form-textarea" rows="3" placeholder="Any special instructions..."></textarea>
+                        </div>
+
+                        <div class="checkout-divider"></div>
+
+                        <h2 class="checkout-heading">
+                            <span class="step-number">2</span>
+                            Payment Method
+                        </h2>
+
+                        <div class="payment-method-card active">
+                            <div class="payment-method-header">
+                                <input type="radio" name="payment" value="bank-transfer" id="bank-transfer" checked>
+                                <label for="bank-transfer">
+                                    <div class="payment-icon">🏦</div>
+                                    <div class="payment-info">
+                                        <div class="payment-title">Bank Transfer</div>
+                                        <div class="payment-subtitle">Direct bank deposit</div>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="payment-notice">
+                            <div class="notice-icon">ℹ️</div>
+                            <div class="notice-content">
+                                <strong>Payment Instructions:</strong>
+                                <p>After placing your order, you'll receive our bank details via email. Please complete the bank transfer within 24 hours. Your game codes will be sent immediately after we confirm your payment.</p>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="checkbox-label checkbox-large">
+                                <input type="checkbox" name="terms" required>
+                                <span>I agree to the <a href="#">Terms & Conditions</a> and <a href="#">Refund Policy</a></span>
+                            </label>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary btn-full btn-large">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect>
+                                <line x1="1" y1="10" x2="23" y2="10"></line>
+                            </svg>
+                            Place Order
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Order Summary -->
+                <div class="order-summary-wrapper">
+                    <h2 class="checkout-heading">Order Summary</h2>
+                    
+                    <div id="cart-items" class="cart-items">
+                        <!-- Cart items will be loaded here -->
+                        <div class="empty-cart">
+                            <div class="empty-cart-icon">🛒</div>
+                            <p>Your cart is empty</p>
+                            <a href="games.html" class="btn btn-secondary">Browse Games</a>
+                        </div>
+                    </div>
+
+                    <div class="order-totals">
+                        <div class="total-row">
+                            <span>Subtotal:</span>
+                            <span id="subtotal">$0.00</span>
+                        </div>
+                        <div class="total-row">
+                            <span>Tax (0%):</span>
+                            <span id="tax">$0.00</span>
+                        </div>
+                        <div class="total-row total-final">
+                            <span>Total:</span>
+                            <span id="total">$0.00</span>
+                        </div>
+                    </div>
+
+                    <div class="security-badges">
+                        <div class="security-badge">
+                            <div class="badge-icon">🔒</div>
+                            <div class="badge-text">
+                                <strong>Secure Payment</strong>
+                                <small>Your data is protected</small>
+                            </div>
+                        </div>
+                        <div class="security-badge">
+                            <div class="badge-icon">⚡</div>
+                            <div class="badge-text">
+                                <strong>Instant Delivery</strong>
+                                <small>Codes sent after payment</small>
+                            </div>
+                        </div>
+                        <div class="security-badge">
+                            <div class="badge-icon">💎</div>
+                            <div class="badge-text">
+                                <strong>Verified Codes</strong>
+                                <small>100% legitimate</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Trust Section -->
+    <section class="trust-section">
+        <div class="container">
+            <div class="trust-items">
+                <div class="trust-item">
+                    <div class="trust-icon">✓</div>
+                    <div class="trust-text">Trusted by 2000+ gamers</div>
+                </div>
+                <div class="trust-item">
+                    <div class="trust-icon">✓</div>
+                    <div class="trust-text">24/7 customer support</div>
+                </div>
+                <div class="trust-item">
+                    <div class="trust-icon">✓</div>
+                    <div class="trust-text">Money-back guarantee</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <div class="footer-logo">
+                      <img src="https://i.ibb.co/hR0Wv19W/Krazy-Kross-Games-LOGO-2.png" alt="Logo" class="logo-image">
+                        <span class="logo-text">KRAZYKROSS GAMES</span>
+                    </div>
+                    <p class="footer-description">Your trusted source for PlayStation digital games. Fast, secure, and reliable.</p>
+                </div>
+                
+                <div class="footer-column">
+                    <h4 class="footer-heading">Quick Links</h4>
+                    <ul class="footer-links">
+                        <li><a href="games.html">Browse Games</a></li>
+                        <li><a href="index.html#featured">Featured Titles</a></li>
+                        <li><a href="index.html#deals">Special Offers</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h4 class="footer-heading">Support</h4>
+                    <ul class="footer-links">
+                        <li><a href="faq.html">FAQ</a></li>
+                        <li><a href="contact.html">Help Center</a></li>
+                        <li><a href="contact.html">Contact Us</a></li>
+                        <li><a href="#">Refund Policy</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h4 class="footer-heading">Legal</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">Cookie Policy</a></li>
+                        <li><a href="#">Disclaimer</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2026 Krazykross Games. All rights reserved.</p>
+                <p class="footer-disclaimer">PlayStation is a registered trademark of Sony Interactive Entertainment Inc.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script src="games-data.js"></script>
+    <script src="game-stock-system.js"></script>
+    <script src="ps-plus-data.js"></script>
+    <script src="ps-plus-stock.js"></script>
+    <script src="ps-plus-sheets-integration.js"></script> 
+    <script src="checkout.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+<script>
+    // Initialize EmailJS
+    (function(){
+        emailjs.init("LmlNrz2s7TSb30M9R"); // Replace with your public key
+    })();
+</script>
+
+<!-- WhatsApp Floating Button -->
+<a href="https://wa.me/94742394594?text=Hello!%20I%20have%20a%20question%20about%20games" 
+   class="whatsapp-float" 
+   target="_blank"
+   aria-label="Chat on WhatsApp">
+    <svg width="60" height="60" viewBox="0 0 60 60">
+        <circle cx="30" cy="30" r="28" fill="#25D366"/>
+        <path fill="white" d="M30.667 15.333c-8.284 0-15 6.716-15 15 0 2.75.742 5.324 2.036 7.542l-2.119 6.358 6.545-2.083c2.136 1.167 4.583 1.836 7.204 1.836 8.284 0 15-6.716 15-15s-6.716-15-15-15zm8.542 21.208c-.354.997-2.083 1.917-2.875 2.042-.75.125-1.708.208-2.75-.167-1.042-.375-2.375-.875-4.125-1.708-3.709-1.792-6.125-5.542-6.292-5.792-.167-.25-1.375-1.792-1.375-3.417s.875-2.417 1.167-2.75c.292-.333.667-.417.875-.417.208 0 .417 0 .583.008.188.009.438-.071.688.521.25.593.875 2.125.958 2.292.083.167.125.375.042.583-.083.208-.167.292-.333.458-.167.167-.333.375-.458.5-.167.125-.333.292-.167.542.167.25.75 1.25 1.625 2.042 1.125 1 2.083 1.333 2.375 1.458.292.125.458.125.625-.042.167-.167.708-.833.917-1.125.208-.292.417-.25.667-.167.25.083 1.583.75 1.833.875.25.125.417.167.458.292.083.125.083.708-.167 1.375z"/>
+    </svg>
+</a>
+
+<style>
+.whatsapp-float {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    z-index: 999999;
+    transition: transform 0.3s ease;
+    filter: drop-shadow(0 4px 12px rgba(37, 211, 102, 0.4));
+}
+
+.whatsapp-float:hover {
+    transform: scale(1.3);
+}
+
+@media (max-width: 768px) {
+    .whatsapp-float {
+        bottom: 20px;
+        right: 20px;
+    }
+    
+    .whatsapp-float svg {
+        width: 50px;
+        height: 50px;
+    }
+}
+</style>
+
+</body>
+</html>
