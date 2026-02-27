@@ -5,15 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gaming Blog - KrazyKross Games</title>
     <meta name="description" content="Latest gaming news, reviews, and tips for PlayStation gamers in Sri Lanka">
+    <meta name="keywords" content="gaming blog, PS5 news, game reviews, PlayStation tips, Sri Lanka gaming">
     
     <!-- Stylesheets -->
     <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="css/blog-styles.css">
+ 
     
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="favicon.png">
 </head>
 <body>
     <!-- Navigation -->
@@ -26,11 +30,11 @@
                     <span class="logo-subtitle">GAMES</span>
                 </a>
                 <div class="nav-links">
-                   <a href="index.html" class="nav-link">Home</a>
+                    <a href="index.html" class="nav-link">Home</a>
                     <a href="games.html" class="nav-link">Games</a>
                     <a href="ps-plus.html" class="nav-link">PS Plus</a>
                     <a href="blog.html" class="nav-link active">Blog</a>
-                    <a href="about.html" class="nav-link active">About</a>
+                    <a href="about.html" class="nav-link">About</a>
                     <a href="contact.html" class="nav-link">Contact</a>
                     <a href="faq.html" class="nav-link">FAQ</a>
                 </div>
@@ -50,6 +54,11 @@
                         <span class="cart-badge">0</span>
                     </a>
                 </div>
+                <button class="mobile-menu-btn">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
             </div>
         </div>
     </nav>
@@ -59,6 +68,17 @@
         <div class="container">
             <h1 class="page-title">Gaming Blog</h1>
             <p class="page-subtitle">Latest news, reviews, and insights from the gaming world</p>
+            
+            <!-- Search Bar (Optional) -->
+            <div class="blog-search-container">
+                <input type="text" id="blog-search" placeholder="Search articles..." class="blog-search-input">
+                <button class="blog-search-btn">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <path d="m21 21-4.35-4.35"></path>
+                    </svg>
+                </button>
+            </div>
         </div>
     </section>
 
@@ -68,17 +88,17 @@
             
             <!-- Featured Post -->
             <div id="featured-post" class="featured-post-container">
-                <!-- Loaded dynamically -->
+                <!-- Loaded dynamically from Contentful -->
             </div>
 
             <!-- Category Filter -->
             <div class="blog-filters">
                 <button class="filter-btn active" data-category="all">All Posts</button>
-                <button class="filter-btn" data-category="Game Reviews">Game Reviews</button>
-                <button class="filter-btn" data-category="News">News</button>
-                <button class="filter-btn" data-category="Tips & Guides">Tips & Guides</button>
-                <button class="filter-btn" data-category="PS Plus">PS Plus</button>
-                <button class="filter-btn" data-category="Industry News">Industry News</button>
+                <button class="filter-btn" data-category="Game Reviews">🎮 Game Reviews</button>
+                <button class="filter-btn" data-category="News">📰 News</button>
+                <button class="filter-btn" data-category="Tips & Guides">💡 Tips & Guides</button>
+                <button class="filter-btn" data-category="PS Plus">⭐ PS Plus</button>
+                <button class="filter-btn" data-category="Industry News">📊 Industry News</button>
             </div>
 
             <!-- Blog Grid -->
@@ -92,7 +112,12 @@
 
             <!-- Load More Button -->
             <div class="load-more-container" style="display: none;">
-                <button id="load-more-btn" class="btn btn-secondary">Load More Posts</button>
+                <button id="load-more-btn" class="btn btn-secondary">
+                    Load More Posts
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-left: 8px;">
+                        <path d="M12 5v14M5 12l7 7 7-7"/>
+                    </svg>
+                </button>
             </div>
 
         </div>
@@ -101,12 +126,36 @@
     <!-- Newsletter Signup -->
     <section class="newsletter-section">
         <div class="container">
-            <h2 class="section-title">Stay Updated</h2>
-            <p class="section-subtitle">Get the latest gaming news and exclusive deals delivered to your inbox</p>
-            <form class="newsletter-form">
-                <input type="email" placeholder="Enter your email" required>
-                <button type="submit" class="btn btn-primary">Subscribe</button>
-            </form>
+            <div class="newsletter-content">
+                <div class="newsletter-icon">📧</div>
+                <h2 class="section-title">Stay Updated</h2>
+                <p class="section-subtitle">Get the latest gaming news and exclusive deals delivered to your inbox</p>
+                <form class="newsletter-form" id="newsletter-form">
+                    <input type="email" name="email" placeholder="Enter your email" required>
+                    <button type="submit" class="btn btn-primary">Subscribe</button>
+                </form>
+                <p class="newsletter-privacy">
+                    <small>We respect your privacy. Unsubscribe at any time.</small>
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Call to Action -->
+    <section class="cta-section">
+        <div class="container">
+            <div class="cta-content">
+                <h2 class="cta-title">Ready to Start Gaming?</h2>
+                <p class="cta-subtitle">Browse our collection of digital game codes and PS Plus subscriptions</p>
+                <div class="cta-buttons">
+                    <a href="games.html" class="btn btn-primary">
+                        🎮 Browse Games
+                    </a>
+                    <a href="ps-plus.html" class="btn btn-secondary">
+                        ⭐ Get PS Plus
+                    </a>
+                </div>
+            </div>
         </div>
     </section>
 
@@ -119,7 +168,24 @@
                         <img src="https://i.ibb.co/hR0Wv19W/Krazy-Kross-Games-LOGO-2.png" alt="Logo" class="logo-image">
                         <span class="logo-text">KRAZYKROSS GAMES</span>
                     </div>
-                    <p class="footer-description">Your trusted source for PlayStation digital games and subscriptions.</p>
+                    <p class="footer-description">Your trusted source for PlayStation digital games and subscriptions in Sri Lanka.</p>
+                    <div class="footer-social">
+                        <a href="#" class="social-link" aria-label="Facebook">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                            </svg>
+                        </a>
+                        <a href="#" class="social-link" aria-label="Instagram">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                            </svg>
+                        </a>
+                        <a href="#" class="social-link" aria-label="Twitter">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/>
+                            </svg>
+                        </a>
+                    </div>
                 </div>
                 
                 <div class="footer-column">
@@ -129,6 +195,7 @@
                         <li><a href="ps-plus.html">PS Plus</a></li>
                         <li><a href="blog.html">Blog</a></li>
                         <li><a href="about.html">About Us</a></li>
+                        <li><a href="index.html#deals">Special Offers</a></li>
                     </ul>
                 </div>
                 
@@ -136,7 +203,10 @@
                     <h4 class="footer-heading">Support</h4>
                     <ul class="footer-links">
                         <li><a href="faq.html">FAQ</a></li>
+                        <li><a href="contact.html">Help Center</a></li>
                         <li><a href="contact.html">Contact Us</a></li>
+                        <li><a href="#">Refund Policy</a></li>
+                        <li><a href="#">Shipping Info</a></li>
                     </ul>
                 </div>
                 
@@ -145,12 +215,15 @@
                     <ul class="footer-links">
                         <li><a href="#">Privacy Policy</a></li>
                         <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">Cookie Policy</a></li>
+                        <li><a href="#">Disclaimer</a></li>
                     </ul>
                 </div>
             </div>
             
             <div class="footer-bottom">
                 <p>&copy; 2026 KrazyKross Games. All rights reserved.</p>
+                <p class="footer-disclaimer">PlayStation and PS Plus are registered trademarks of Sony Interactive Entertainment Inc.</p>
             </div>
         </div>
     </footer>
@@ -158,16 +231,190 @@
     <!-- Scripts -->
     <script src="script.js"></script>
     <script src="js/blog.js"></script>
-    
-    <!-- WhatsApp Button -->
-    <a href="https://wa.me/94742394594?text=Hello!%20I%20have%20a%20question" 
+
+    <!-- WhatsApp Floating Button -->
+    <a href="https://wa.me/94742394594?text=Hello!%20I%20have%20a%20question%20about%20gaming" 
        class="whatsapp-float" 
-       target="_blank">
+       target="_blank"
+       aria-label="Chat on WhatsApp">
         <svg width="60" height="60" viewBox="0 0 60 60">
             <circle cx="30" cy="30" r="28" fill="#25D366"/>
             <path fill="white" d="M30.667 15.333c-8.284 0-15 6.716-15 15 0 2.75.742 5.324 2.036 7.542l-2.119 6.358 6.545-2.083c2.136 1.167 4.583 1.836 7.204 1.836 8.284 0 15-6.716 15-15s-6.716-15-15-15zm8.542 21.208c-.354.997-2.083 1.917-2.875 2.042-.75.125-1.708.208-2.75-.167-1.042-.375-2.375-.875-4.125-1.708-3.709-1.792-6.125-5.542-6.292-5.792-.167-.25-1.375-1.792-1.375-3.417s.875-2.417 1.167-2.75c.292-.333.667-.417.875-.417.208 0 .417 0 .583.008.188.009.438-.071.688.521.25.593.875 2.125.958 2.292.083.167.125.375.042.583-.083.208-.167.292-.333.458-.167.167-.333.375-.458.5-.167.125-.333.292-.167.542.167.25.75 1.25 1.625 2.042 1.125 1 2.083 1.333 2.375 1.458.292.125.458.125.625-.042.167-.167.708-.833.917-1.125.208-.292.417-.25.667-.167.25.083 1.583.75 1.833.875.25.125.417.167.458.292.083.125.083.708-.167 1.375z"/>
         </svg>
     </a>
+
+    <style>
+    /* WhatsApp Button Styles */
+    .whatsapp-float {
+        position: fixed;
+        bottom: 30px;
+        right: 30px;
+        z-index: 999999;
+        transition: transform 0.3s ease;
+        filter: drop-shadow(0 4px 12px rgba(37, 211, 102, 0.4));
+    }
+
+    .whatsapp-float:hover {
+        transform: scale(1.1);
+    }
+
+    /* Blog Search */
+    .blog-search-container {
+        max-width: 600px;
+        margin: 32px auto 0;
+        position: relative;
+    }
+
+    .blog-search-input {
+        width: 100%;
+        padding: 16px 60px 16px 24px;
+        background: rgba(255, 255, 255, 0.1);
+        border: 2px solid rgba(255, 255, 255, 0.2);
+        border-radius: 50px;
+        color: white;
+        font-size: 16px;
+        backdrop-filter: blur(10px);
+    }
+
+    .blog-search-input::placeholder {
+        color: rgba(255, 255, 255, 0.6);
+    }
+
+    .blog-search-input:focus {
+        outline: none;
+        border-color: rgba(255, 255, 255, 0.4);
+        background: rgba(255, 255, 255, 0.15);
+    }
+
+    .blog-search-btn {
+        position: absolute;
+        right: 8px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 44px;
+        height: 44px;
+        background: var(--gradient-primary);
+        border: none;
+        border-radius: 50%;
+        color: white;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .blog-search-btn:hover {
+        transform: translateY(-50%) scale(1.1);
+    }
+
+    /* Newsletter Section Enhancements */
+    .newsletter-content {
+        text-align: center;
+        max-width: 600px;
+        margin: 0 auto;
+    }
+
+    .newsletter-icon {
+        font-size: 64px;
+        margin-bottom: 16px;
+    }
+
+    .newsletter-privacy {
+        margin-top: 12px;
+        color: var(--color-text-muted);
+    }
+
+    /* CTA Section */
+    .cta-section {
+        padding: 80px 0;
+        background: var(--color-dark-light);
+        border-top: 1px solid var(--color-border);
+    }
+
+    .cta-content {
+        text-align: center;
+    }
+
+    .cta-title {
+        font-size: 42px;
+        font-weight: 900;
+        margin-bottom: 16px;
+        background: var(--gradient-primary);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    .cta-subtitle {
+        font-size: 18px;
+        color: var(--color-text-muted);
+        margin-bottom: 32px;
+    }
+
+    .cta-buttons {
+        display: flex;
+        gap: 16px;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+
+    /* Footer Social Links */
+    .footer-social {
+        display: flex;
+        gap: 12px;
+        margin-top: 16px;
+    }
+
+    .social-link {
+        width: 40px;
+        height: 40px;
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid var(--color-border);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--color-text-muted);
+        transition: all 0.3s ease;
+    }
+
+    .social-link:hover {
+        background: var(--color-primary);
+        border-color: var(--color-primary);
+        color: white;
+        transform: translateY(-2px);
+    }
+
+    /* Mobile Responsive */
+    @media (max-width: 768px) {
+        .whatsapp-float {
+            bottom: 20px;
+            right: 20px;
+        }
+        
+        .whatsapp-float svg {
+            width: 50px;
+            height: 50px;
+        }
+
+        .blog-search-container {
+            margin-top: 24px;
+        }
+
+        .cta-title {
+            font-size: 32px;
+        }
+
+        .cta-buttons {
+            flex-direction: column;
+            align-items: stretch;
+        }
+
+        .cta-buttons .btn {
+            width: 100%;
+        }
+    }
+    </style>
 
 </body>
 </html>

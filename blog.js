@@ -1,6 +1,6 @@
 // ============================================
-// CONTENTFUL BLOG INTEGRATION
-// Auto-updating blog system
+// BLOG LISTING PAGE
+// Contentful Integration for KrazyKross Games
 // ============================================
 
 // CONTENTFUL CONFIGURATION
@@ -32,6 +32,7 @@ document.addEventListener('DOMContentLoaded', function() {
     loadBlogPosts();
     setupFilterButtons();
     setupLoadMore();
+    setupSearch();
     
     console.log('✅ Blog initialized');
 });
@@ -153,8 +154,8 @@ function displayFeaturedPost() {
     container.innerHTML = `
         <div class="featured-post">
             <div class="featured-post-image">
-                <img src="${featuredPost.imageUrl}" alt="${featuredPost.title}">
-                <div class="featured-badge">Featured</div>
+                <img src="${featuredPost.imageUrl}" alt="${featuredPost.title}" loading="eager">
+                <div class="featured-badge">⭐ Featured</div>
             </div>
             <div class="featured-post-content">
                 <div class="post-meta">
@@ -165,7 +166,9 @@ function displayFeaturedPost() {
                 <p class="featured-post-excerpt">${featuredPost.excerpt}</p>
                 <div class="post-footer">
                     <span class="post-author">By ${featuredPost.author}</span>
-                    <a href="blog-post.html?slug=${featuredPost.slug}" class="btn btn-primary">Read More</a>
+                    <a href="blog-post.html?slug=${featuredPost.slug}" class="btn btn-primary">
+                        Read More →
+                    </a>
                 </div>
             </div>
         </div>
@@ -202,8 +205,10 @@ function renderPosts() {
     if (displayedPosts.length === 0) {
         grid.innerHTML = `
             <div class="empty-state">
+                <div style="font-size: 64px; margin-bottom: 16px;">📝</div>
                 <h3>No posts found</h3>
                 <p>Check back soon for more content!</p>
+                <a href="blog.html" class="btn btn-primary" style="margin-top: 24px;">View All Posts</a>
             </div>
         `;
         document.querySelector('.load-more-container').style.display = 'none';
@@ -243,10 +248,21 @@ function createPostCard(post) {
         `<span class="post-tag">${tag}</span>`
     ).join('');
     
+    // Category emoji mapping
+    const categoryEmojis = {
+        'Game Reviews': '🎮',
+        'News': '📰',
+        'Tips & Guides': '💡',
+        'PS Plus': '⭐',
+        'Industry News': '📊'
+    };
+    
+    const categoryEmoji = categoryEmojis[post.category] || '📝';
+    
     card.innerHTML = `
         <div class="blog-card-image">
             <img src="${post.imageUrl}" alt="${post.title}" loading="lazy">
-            <div class="blog-card-category">${post.category}</div>
+            <div class="blog-card-category">${categoryEmoji} ${post.category}</div>
         </div>
         <div class="blog-card-content">
             <div class="post-meta">
@@ -255,9 +271,7 @@ function createPostCard(post) {
             </div>
             <h3 class="blog-card-title">${post.title}</h3>
             <p class="blog-card-excerpt">${post.excerpt}</p>
-            <div class="post-tags">
-                ${tagsHTML}
-            </div>
+            ${tagsHTML ? `<div class="post-tags">${tagsHTML}</div>` : ''}
             <a href="blog-post.html?slug=${post.slug}" class="blog-card-link">Read More →</a>
         </div>
     `;
@@ -280,6 +294,12 @@ function setupFilterButtons() {
             // Filter posts
             const category = this.getAttribute('data-category');
             filterAndDisplayPosts(category);
+            
+            // Smooth scroll to posts
+            document.getElementById('blog-posts-grid').scrollIntoView({ 
+                behavior: 'smooth', 
+                block: 'start' 
+            });
         });
     });
 }
@@ -300,11 +320,77 @@ function setupLoadMore() {
                 const cards = document.querySelectorAll('.blog-card');
                 const lastVisibleCard = cards[(currentPage - 1) * POSTS_PER_PAGE];
                 if (lastVisibleCard) {
-                    lastVisibleCard.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                    lastVisibleCard.scrollIntoView({ 
+                        behavior: 'smooth', 
+                        block: 'nearest' 
+                    });
                 }
             }, 100);
         });
     }
+}
+
+// ============================================
+// SEARCH FUNCTIONALITY
+// ============================================
+function setupSearch() {
+    const searchInput = document.getElementById('blog-search');
+    const searchBtn = document.querySelector('.blog-search-btn');
+    
+    if (!searchInput) return;
+    
+    function performSearch() {
+        const searchTerm = searchInput.value.toLowerCase().trim();
+        
+        if (!searchTerm) {
+            // If empty, show all posts
+            filterAndDisplayPosts(currentCategory);
+            return;
+        }
+        
+        // Filter posts by search term
+        displayedPosts = allPosts.filter(post => {
+            return !post.featured && (
+                post.title.toLowerCase().includes(searchTerm) ||
+                post.excerpt.toLowerCase().includes(searchTerm) ||
+                post.contentText.toLowerCase().includes(searchTerm) ||
+                post.tags.some(tag => tag.toLowerCase().includes(searchTerm)) ||
+                post.category.toLowerCase().includes(searchTerm)
+            );
+        });
+        
+        // Reset to first page
+        currentPage = 1;
+        
+        // Update filter buttons (remove active state)
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.classList.remove('active');
+        });
+        
+        console.log(`🔍 Search: "${searchTerm}" - ${displayedPosts.length} results`);
+        
+        renderPosts();
+    }
+    
+    // Search on button click
+    if (searchBtn) {
+        searchBtn.addEventListener('click', performSearch);
+    }
+    
+    // Search on Enter key
+    searchInput.addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            performSearch();
+        }
+    });
+    
+    // Live search (optional - debounced)
+    let searchTimeout;
+    searchInput.addEventListener('input', function() {
+        clearTimeout(searchTimeout);
+        searchTimeout = setTimeout(performSearch, 500);
+    });
 }
 
 // ============================================
@@ -316,13 +402,75 @@ function showErrorState() {
     
     grid.innerHTML = `
         <div class="error-state">
+            <div style="font-size: 64px; margin-bottom: 16px;">⚠️</div>
             <h3>Unable to Load Posts</h3>
             <p>Please check your internet connection and try again.</p>
-            <button onclick="location.reload()" class="btn btn-primary">Retry</button>
+            <button onclick="location.reload()" class="btn btn-primary" style="margin-top: 24px;">
+                Retry
+            </button>
         </div>
     `;
     
     featuredContainer.style.display = 'none';
+}
+
+// ============================================
+// NEWSLETTER FORM HANDLING
+// ============================================
+const newsletterForm = document.getElementById('newsletter-form');
+
+if (newsletterForm) {
+    newsletterForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const emailInput = this.querySelector('input[type="email"]');
+        const email = emailInput.value;
+        
+        // Here you can integrate with your email service
+        // For now, we'll just show a success message
+        
+        console.log('📧 Newsletter signup:', email);
+        
+        // Show success message
+        showNotification('✅ Successfully subscribed to newsletter!', 'success');
+        
+        // Clear form
+        emailInput.value = '';
+        
+        // You can integrate with services like:
+        // - EmailJS
+        // - Mailchimp
+        // - SendGrid
+        // - ConvertKit
+    });
+}
+
+// ============================================
+// NOTIFICATION HELPER
+// ============================================
+function showNotification(message, type = 'success') {
+    const notification = document.createElement('div');
+    notification.style.cssText = `
+        position: fixed;
+        top: 100px;
+        right: 24px;
+        background: ${type === 'success' ? '#22c55e' : '#ff4757'};
+        color: white;
+        padding: 16px 24px;
+        border-radius: 12px;
+        font-weight: 600;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+        z-index: 10000;
+        animation: slideInRight 0.3s ease;
+    `;
+    
+    notification.textContent = message;
+    document.body.appendChild(notification);
+    
+    setTimeout(() => {
+        notification.style.animation = 'slideOutRight 0.3s ease';
+        setTimeout(() => notification.remove(), 300);
+    }, 3000);
 }
 
 // ============================================
@@ -334,4 +482,4 @@ window.refreshBlogPosts = function() {
 
 console.log('✅ Blog.js loaded');
 console.log('💡 Blog posts will auto-update from Contentful');
-
+console.log('🔄 To manually refresh: window.refreshBlogPosts()');
