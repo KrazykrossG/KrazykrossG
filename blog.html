@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gaming Blog - KrazyKross Games</title>
+    <meta name="description" content="Latest gaming news, reviews, and tips for PlayStation gamers in Sri Lanka">
+    
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="css/blog-styles.css">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-content">
+                <a href="index.html" class="logo">
+                    <img src="https://i.ibb.co/hR0Wv19W/Krazy-Kross-Games-LOGO-2.png" alt="Logo" class="logo-image">
+                    <span class="logo-text">KRAZYKROSS</span>
+                    <span class="logo-subtitle">GAMES</span>
+                </a>
+                <div class="nav-links">
+                   <a href="index.html" class="nav-link">Home</a>
+                    <a href="games.html" class="nav-link">Games</a>
+                    <a href="ps-plus.html" class="nav-link">PS Plus</a>
+                    <a href="blog.html" class="nav-link active">Blog</a>
+                    <a href="about.html" class="nav-link active">About</a>
+                    <a href="contact.html" class="nav-link">Contact</a>
+                    <a href="faq.html" class="nav-link">FAQ</a>
+                </div>
+                <div class="nav-actions">
+                    <button class="btn-search">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="11" cy="11" r="8"></circle>
+                            <path d="m21 21-4.35-4.35"></path>
+                        </svg>
+                    </button>
+                    <a href="checkout.html" class="btn-cart">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="9" cy="21" r="1"></circle>
+                            <circle cx="20" cy="21" r="1"></circle>
+                            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+                        </svg>
+                        <span class="cart-badge">0</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Blog Header -->
+    <section class="blog-header">
+        <div class="container">
+            <h1 class="page-title">Gaming Blog</h1>
+            <p class="page-subtitle">Latest news, reviews, and insights from the gaming world</p>
+        </div>
+    </section>
+
+    <!-- Blog Section -->
+    <section class="blog-section">
+        <div class="container">
+            
+            <!-- Featured Post -->
+            <div id="featured-post" class="featured-post-container">
+                <!-- Loaded dynamically -->
+            </div>
+
+            <!-- Category Filter -->
+            <div class="blog-filters">
+                <button class="filter-btn active" data-category="all">All Posts</button>
+                <button class="filter-btn" data-category="Game Reviews">Game Reviews</button>
+                <button class="filter-btn" data-category="News">News</button>
+                <button class="filter-btn" data-category="Tips & Guides">Tips & Guides</button>
+                <button class="filter-btn" data-category="PS Plus">PS Plus</button>
+                <button class="filter-btn" data-category="Industry News">Industry News</button>
+            </div>
+
+            <!-- Blog Grid -->
+            <div id="blog-posts-grid" class="blog-grid">
+                <!-- Loading state -->
+                <div class="loading-state">
+                    <div class="loading-spinner"></div>
+                    <p>Loading latest posts...</p>
+                </div>
+            </div>
+
+            <!-- Load More Button -->
+            <div class="load-more-container" style="display: none;">
+                <button id="load-more-btn" class="btn btn-secondary">Load More Posts</button>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Newsletter Signup -->
+    <section class="newsletter-section">
+        <div class="container">
+            <h2 class="section-title">Stay Updated</h2>
+            <p class="section-subtitle">Get the latest gaming news and exclusive deals delivered to your inbox</p>
+            <form class="newsletter-form">
+                <input type="email" placeholder="Enter your email" required>
+                <button type="submit" class="btn btn-primary">Subscribe</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <div class="footer-logo">
+                        <img src="https://i.ibb.co/hR0Wv19W/Krazy-Kross-Games-LOGO-2.png" alt="Logo" class="logo-image">
+                        <span class="logo-text">KRAZYKROSS GAMES</span>
+                    </div>
+                    <p class="footer-description">Your trusted source for PlayStation digital games and subscriptions.</p>
+                </div>
+                
+                <div class="footer-column">
+                    <h4 class="footer-heading">Quick Links</h4>
+                    <ul class="footer-links">
+                        <li><a href="games.html">Browse Games</a></li>
+                        <li><a href="ps-plus.html">PS Plus</a></li>
+                        <li><a href="blog.html">Blog</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h4 class="footer-heading">Support</h4>
+                    <ul class="footer-links">
+                        <li><a href="faq.html">FAQ</a></li>
+                        <li><a href="contact.html">Contact Us</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h4 class="footer-heading">Legal</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2026 KrazyKross Games. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="script.js"></script>
+    <script src="js/blog.js"></script>
+    
+    <!-- WhatsApp Button -->
+    <a href="https://wa.me/94742394594?text=Hello!%20I%20have%20a%20question" 
+       class="whatsapp-float" 
+       target="_blank">
+        <svg width="60" height="60" viewBox="0 0 60 60">
+            <circle cx="30" cy="30" r="28" fill="#25D366"/>
+            <path fill="white" d="M30.667 15.333c-8.284 0-15 6.716-15 15 0 2.75.742 5.324 2.036 7.542l-2.119 6.358 6.545-2.083c2.136 1.167 4.583 1.836 7.204 1.836 8.284 0 15-6.716 15-15s-6.716-15-15-15zm8.542 21.208c-.354.997-2.083 1.917-2.875 2.042-.75.125-1.708.208-2.75-.167-1.042-.375-2.375-.875-4.125-1.708-3.709-1.792-6.125-5.542-6.292-5.792-.167-.25-1.375-1.792-1.375-3.417s.875-2.417 1.167-2.75c.292-.333.667-.417.875-.417.208 0 .417 0 .583.008.188.009.438-.071.688.521.25.593.875 2.125.958 2.292.083.167.125.375.042.583-.083.208-.167.292-.333.458-.167.167-.333.375-.458.5-.167.125-.333.292-.167.542.167.25.75 1.25 1.625 2.042 1.125 1 2.083 1.333 2.375 1.458.292.125.458.125.625-.042.167-.167.708-.833.917-1.125.208-.292.417-.25.667-.167.25.083 1.583.75 1.833.875.25.125.417.167.458.292.083.125.083.708-.167 1.375z"/>
+        </svg>
+    </a>
+
+</body>
+</html>
