@@ -1,22 +1,23 @@
 // ============================================
-// BLOG LISTING PAGE
-// Contentful Integration for KrazyKross Games
+// BLOG LISTING PAGE - ENHANCED VERSION
+// With Better Error Handling & Debugging
 // ============================================
 
 // CONTENTFUL CONFIGURATION
 const CONTENTFUL_CONFIG = {
-    space: 'wm86ywmrftpw', // Replace with your Space ID
-    accessToken: 'MzrFzNX44mLGR6IVqrjZwF0nVeN1fhLK1ZBLRePtj6Q', // Replace with your Access Token
+    space: 'wm86ywmrftpw', // ← REPLACE THIS!
+    accessToken: 'MzrFzNX44mLGR6IVqrjZwF0nVeN1fhLK1ZBLRePtj6Q', // ← REPLACE THIS!
     environment: 'master',
-    apiUrl: 'https://cdn.contentful.com'
+    contentType: 'blogPost' // ← CHANGE IF DIFFERENT!
 };
 
 // Build Contentful API URL
-function getContentfulUrl(contentType, query = '') {
-    return `${CONTENTFUL_CONFIG.apiUrl}/spaces/${CONTENTFUL_CONFIG.space}/environments/${CONTENTFUL_CONFIG.environment}/entries?access_token=${CONTENTFUL_CONFIG.accessToken}&content_type=${contentType}${query}`;
+function getContentfulUrl(query = '') {
+    const base = `https://cdn.contentful.com/spaces/${CONTENTFUL_CONFIG.space}/environments/${CONTENTFUL_CONFIG.environment}/entries`;
+    return `${base}?access_token=${CONTENTFUL_CONFIG.accessToken}&content_type=${CONTENTFUL_CONFIG.contentType}${query}`;
 }
 
-// State management
+// State
 let allPosts = [];
 let displayedPosts = [];
 let currentCategory = 'all';
@@ -24,67 +25,87 @@ const POSTS_PER_PAGE = 6;
 let currentPage = 1;
 
 // ============================================
-// INITIALIZE BLOG
+// INITIALIZE
 // ============================================
 document.addEventListener('DOMContentLoaded', function() {
-    console.log('🎮 Blog page loading...');
+    console.log('🎮 Blog initializing...');
+    console.log('📡 Contentful Config:', {
+        space: CONTENTFUL_CONFIG.space,
+        contentType: CONTENTFUL_CONFIG.contentType
+    });
     
     loadBlogPosts();
     setupFilterButtons();
     setupLoadMore();
-    setupSearch();
-    
-    console.log('✅ Blog initialized');
 });
 
 // ============================================
-// FETCH BLOG POSTS FROM CONTENTFUL
+// LOAD POSTS
 // ============================================
 async function loadBlogPosts() {
-    console.log('📡 Fetching blog posts from Contentful...');
+    console.log('📡 Fetching posts from Contentful...');
+    
+    const grid = document.getElementById('blog-posts-grid');
     
     try {
-        // Fetch all blog posts, ordered by published date
-        const url = getContentfulUrl('blogPost', '&order=-fields.publishedDate');
+        const url = getContentfulUrl('&order=-fields.publishedDate&limit=50');
+        console.log('🌐 API URL:', url);
         
         const response = await fetch(url);
         
+        console.log('📨 Response status:', response.status);
+        
         if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
+            throw new Error(`HTTP ${response.status}: ${response.statusText}`);
         }
         
         const data = await response.json();
         
-        console.log('✅ Contentful response:', data);
+        console.log('✅ API Response:', data);
+        console.log('📊 Total entries:', data.total);
+        console.log('📦 Items received:', data.items?.length || 0);
+        
+        if (!data.items || data.items.length === 0) {
+            console.warn('⚠️ No items in response');
+            showEmptyState('No blog posts found. Create some in Contentful!');
+            return;
+        }
         
         // Process posts
-        allPosts = data.items.map(item => processPost(item, data.includes));
+        allPosts = data.items.map((item, index) => {
+            console.log(`Processing post ${index + 1}:`, item.fields?.title);
+            return processPost(item, data.includes);
+        });
         
-        console.log(`📚 Loaded ${allPosts.length} blog posts`);
+        console.log('✅ Processed posts:', allPosts);
         
-        // Display posts
+        // Display
         displayFeaturedPost();
         filterAndDisplayPosts('all');
         
     } catch (error) {
-        console.error('❌ Error loading blog posts:', error);
-        showErrorState();
+        console.error('❌ Error loading posts:', error);
+        showErrorState(error.message);
     }
 }
 
 // ============================================
-// PROCESS POST DATA
+// PROCESS POST
 // ============================================
 function processPost(item, includes) {
     const fields = item.fields;
     
-    // Get featured image
+    console.log('  📝 Processing:', fields.title);
+    
+    // Get image
     let imageUrl = 'https://via.placeholder.com/800x450/1a1a2e/00d9ff?text=Blog+Post';
     
-    if (fields.featuredImage && includes && includes.Asset) {
-        const imageAsset = includes.Asset.find(asset => asset.sys.id === fields.featuredImage.sys.id);
-        if (imageAsset && imageAsset.fields && imageAsset.fields.file) {
-            imageUrl = 'https:' + imageAsset.fields.file.url;
+    if (fields.featuredImage && includes?.Asset) {
+        const imageId = fields.featuredImage.sys.id;
+        const asset = includes.Asset.find(a => a.sys.id === imageId);
+        if (asset?.fields?.file) {
+            imageUrl = 'https:' + asset.fields.file.url;
+            console.log('  🖼️ Image found:', imageUrl);
         }
     }
     
@@ -96,19 +117,11 @@ function processPost(item, includes) {
         day: 'numeric'
     });
     
-    // Process rich text content to plain text excerpt if needed
-    let content = '';
-    if (fields.content && fields.content.content) {
-        content = extractTextFromRichText(fields.content);
-    }
-    
-    return {
+    const post = {
         id: item.sys.id,
         title: fields.title || 'Untitled Post',
-        slug: fields.slug || '',
-        excerpt: fields.excerpt || content.substring(0, 200) + '...',
-        content: fields.content,
-        contentText: content,
+        slug: fields.slug || 'untitled',
+        excerpt: fields.excerpt || 'No excerpt available',
         author: fields.author || 'KrazyKross Team',
         category: fields.category || 'General',
         tags: fields.tags || [],
@@ -117,44 +130,31 @@ function processPost(item, includes) {
         imageUrl: imageUrl,
         featured: fields.featured || false
     };
-}
-
-// Extract text from Contentful rich text
-function extractTextFromRichText(richText) {
-    if (!richText || !richText.content) return '';
     
-    let text = '';
+    console.log('  ✅ Post processed:', post.title);
     
-    richText.content.forEach(node => {
-        if (node.nodeType === 'paragraph' && node.content) {
-            node.content.forEach(contentNode => {
-                if (contentNode.value) {
-                    text += contentNode.value + ' ';
-                }
-            });
-        }
-    });
-    
-    return text.trim();
+    return post;
 }
 
 // ============================================
 // DISPLAY FEATURED POST
 // ============================================
 function displayFeaturedPost() {
-    const featuredPost = allPosts.find(post => post.featured);
+    const container = document.getElementById('featured-post');
+    const featuredPost = allPosts.find(p => p.featured);
     
     if (!featuredPost) {
-        document.getElementById('featured-post').style.display = 'none';
+        console.log('ℹ️ No featured post');
+        container.style.display = 'none';
         return;
     }
     
-    const container = document.getElementById('featured-post');
+    console.log('⭐ Displaying featured post:', featuredPost.title);
     
     container.innerHTML = `
         <div class="featured-post">
             <div class="featured-post-image">
-                <img src="${featuredPost.imageUrl}" alt="${featuredPost.title}" loading="eager">
+                <img src="${featuredPost.imageUrl}" alt="${featuredPost.title}">
                 <div class="featured-badge">⭐ Featured</div>
             </div>
             <div class="featured-post-content">
@@ -166,32 +166,33 @@ function displayFeaturedPost() {
                 <p class="featured-post-excerpt">${featuredPost.excerpt}</p>
                 <div class="post-footer">
                     <span class="post-author">By ${featuredPost.author}</span>
-                    <a href="blog-post.html?slug=${featuredPost.slug}" class="btn btn-primary">
-                        Read More →
-                    </a>
+                    <a href="blog-post.html?slug=${featuredPost.slug}" class="btn btn-primary">Read More →</a>
                 </div>
             </div>
         </div>
     `;
+    
+    container.style.display = 'block';
 }
 
 // ============================================
-// FILTER AND DISPLAY POSTS
+// FILTER & DISPLAY
 // ============================================
 function filterAndDisplayPosts(category) {
     currentCategory = category;
     currentPage = 1;
     
-    // Filter posts
+    console.log('🔍 Filtering by:', category);
+    
     if (category === 'all') {
-        displayedPosts = allPosts.filter(post => !post.featured);
+        displayedPosts = allPosts.filter(p => !p.featured);
     } else {
-        displayedPosts = allPosts.filter(post => 
-            post.category === category && !post.featured
+        displayedPosts = allPosts.filter(p => 
+            p.category === category && !p.featured
         );
     }
     
-    console.log(`📊 Filtered to ${displayedPosts.length} posts in category: ${category}`);
+    console.log('📊 Filtered results:', displayedPosts.length);
     
     renderPosts();
 }
@@ -202,67 +203,57 @@ function filterAndDisplayPosts(category) {
 function renderPosts() {
     const grid = document.getElementById('blog-posts-grid');
     
-    if (displayedPosts.length === 0) {
-        grid.innerHTML = `
-            <div class="empty-state">
-                <div style="font-size: 64px; margin-bottom: 16px;">📝</div>
-                <h3>No posts found</h3>
-                <p>Check back soon for more content!</p>
-                <a href="blog.html" class="btn btn-primary" style="margin-top: 24px;">View All Posts</a>
-            </div>
-        `;
-        document.querySelector('.load-more-container').style.display = 'none';
+    console.log('🎨 Rendering posts...');
+    
+    if (!grid) {
+        console.error('❌ Grid container not found!');
         return;
     }
     
-    // Calculate posts to show
+    if (displayedPosts.length === 0) {
+        showEmptyState('No posts in this category');
+        return;
+    }
+    
     const postsToShow = displayedPosts.slice(0, currentPage * POSTS_PER_PAGE);
+    
+    console.log(`📦 Showing ${postsToShow.length} of ${displayedPosts.length} posts`);
     
     // Clear grid
     grid.innerHTML = '';
     
-    // Create post cards
-    postsToShow.forEach(post => {
+    // Create cards
+    postsToShow.forEach((post, index) => {
+        console.log(`  Creating card ${index + 1}:`, post.title);
         const card = createPostCard(post);
         grid.appendChild(card);
     });
     
-    // Show/hide load more button
+    console.log('✅ Posts rendered successfully');
+    
+    // Load more button
     const loadMoreContainer = document.querySelector('.load-more-container');
-    if (postsToShow.length < displayedPosts.length) {
-        loadMoreContainer.style.display = 'block';
-    } else {
-        loadMoreContainer.style.display = 'none';
+    if (loadMoreContainer) {
+        loadMoreContainer.style.display = 
+            postsToShow.length < displayedPosts.length ? 'block' : 'none';
     }
 }
 
 // ============================================
-// CREATE POST CARD
+// CREATE CARD
 // ============================================
 function createPostCard(post) {
     const card = document.createElement('div');
     card.className = 'blog-card';
     
-    // Format tags
-    const tagsHTML = post.tags.slice(0, 3).map(tag => 
-        `<span class="post-tag">${tag}</span>`
-    ).join('');
-    
-    // Category emoji mapping
-    const categoryEmojis = {
-        'Game Reviews': '🎮',
-        'News': '📰',
-        'Tips & Guides': '💡',
-        'PS Plus': '⭐',
-        'Industry News': '📊'
-    };
-    
-    const categoryEmoji = categoryEmojis[post.category] || '📝';
+    const tagsHTML = post.tags.slice(0, 3)
+        .map(tag => `<span class="post-tag">${tag}</span>`)
+        .join('');
     
     card.innerHTML = `
         <div class="blog-card-image">
             <img src="${post.imageUrl}" alt="${post.title}" loading="lazy">
-            <div class="blog-card-category">${categoryEmoji} ${post.category}</div>
+            <div class="blog-card-category">${post.category}</div>
         </div>
         <div class="blog-card-content">
             <div class="post-meta">
@@ -280,206 +271,71 @@ function createPostCard(post) {
 }
 
 // ============================================
-// FILTER BUTTONS
+// ERROR STATES
 // ============================================
-function setupFilterButtons() {
-    const filterButtons = document.querySelectorAll('.filter-btn');
-    
-    filterButtons.forEach(button => {
-        button.addEventListener('click', function() {
-            // Update active state
-            filterButtons.forEach(btn => btn.classList.remove('active'));
-            this.classList.add('active');
-            
-            // Filter posts
-            const category = this.getAttribute('data-category');
-            filterAndDisplayPosts(category);
-            
-            // Smooth scroll to posts
-            document.getElementById('blog-posts-grid').scrollIntoView({ 
-                behavior: 'smooth', 
-                block: 'start' 
-            });
-        });
-    });
-}
-
-// ============================================
-// LOAD MORE FUNCTIONALITY
-// ============================================
-function setupLoadMore() {
-    const loadMoreBtn = document.getElementById('load-more-btn');
-    
-    if (loadMoreBtn) {
-        loadMoreBtn.addEventListener('click', function() {
-            currentPage++;
-            renderPosts();
-            
-            // Smooth scroll to new content
-            setTimeout(() => {
-                const cards = document.querySelectorAll('.blog-card');
-                const lastVisibleCard = cards[(currentPage - 1) * POSTS_PER_PAGE];
-                if (lastVisibleCard) {
-                    lastVisibleCard.scrollIntoView({ 
-                        behavior: 'smooth', 
-                        block: 'nearest' 
-                    });
-                }
-            }, 100);
-        });
-    }
-}
-
-// ============================================
-// SEARCH FUNCTIONALITY
-// ============================================
-function setupSearch() {
-    const searchInput = document.getElementById('blog-search');
-    const searchBtn = document.querySelector('.blog-search-btn');
-    
-    if (!searchInput) return;
-    
-    function performSearch() {
-        const searchTerm = searchInput.value.toLowerCase().trim();
-        
-        if (!searchTerm) {
-            // If empty, show all posts
-            filterAndDisplayPosts(currentCategory);
-            return;
-        }
-        
-        // Filter posts by search term
-        displayedPosts = allPosts.filter(post => {
-            return !post.featured && (
-                post.title.toLowerCase().includes(searchTerm) ||
-                post.excerpt.toLowerCase().includes(searchTerm) ||
-                post.contentText.toLowerCase().includes(searchTerm) ||
-                post.tags.some(tag => tag.toLowerCase().includes(searchTerm)) ||
-                post.category.toLowerCase().includes(searchTerm)
-            );
-        });
-        
-        // Reset to first page
-        currentPage = 1;
-        
-        // Update filter buttons (remove active state)
-        document.querySelectorAll('.filter-btn').forEach(btn => {
-            btn.classList.remove('active');
-        });
-        
-        console.log(`🔍 Search: "${searchTerm}" - ${displayedPosts.length} results`);
-        
-        renderPosts();
-    }
-    
-    // Search on button click
-    if (searchBtn) {
-        searchBtn.addEventListener('click', performSearch);
-    }
-    
-    // Search on Enter key
-    searchInput.addEventListener('keypress', function(e) {
-        if (e.key === 'Enter') {
-            e.preventDefault();
-            performSearch();
-        }
-    });
-    
-    // Live search (optional - debounced)
-    let searchTimeout;
-    searchInput.addEventListener('input', function() {
-        clearTimeout(searchTimeout);
-        searchTimeout = setTimeout(performSearch, 500);
-    });
-}
-
-// ============================================
-// ERROR STATE
-// ============================================
-function showErrorState() {
+function showEmptyState(message) {
     const grid = document.getElementById('blog-posts-grid');
-    const featuredContainer = document.getElementById('featured-post');
-    
     grid.innerHTML = `
-        <div class="error-state">
-            <div style="font-size: 64px; margin-bottom: 16px;">⚠️</div>
-            <h3>Unable to Load Posts</h3>
-            <p>Please check your internet connection and try again.</p>
-            <button onclick="location.reload()" class="btn btn-primary" style="margin-top: 24px;">
-                Retry
+        <div class="empty-state">
+            <div style="font-size: 64px">📝</div>
+            <h3>No Posts Found</h3>
+            <p>${message}</p>
+            <button onclick="location.reload()" class="btn btn-primary" style="margin-top: 20px">
+                Refresh Page
             </button>
         </div>
     `;
-    
-    featuredContainer.style.display = 'none';
+}
+
+function showErrorState(message) {
+    const grid = document.getElementById('blog-posts-grid');
+    grid.innerHTML = `
+        <div class="error-state">
+            <div style="font-size: 64px">⚠️</div>
+            <h3>Error Loading Posts</h3>
+            <p>${message}</p>
+            <button onclick="location.reload()" class="btn btn-primary" style="margin-top: 20px">
+                Try Again
+            </button>
+        </div>
+    `;
 }
 
 // ============================================
-// NEWSLETTER FORM HANDLING
+// FILTER BUTTONS
 // ============================================
-const newsletterForm = document.getElementById('newsletter-form');
-
-if (newsletterForm) {
-    newsletterForm.addEventListener('submit', function(e) {
-        e.preventDefault();
-        
-        const emailInput = this.querySelector('input[type="email"]');
-        const email = emailInput.value;
-        
-        // Here you can integrate with your email service
-        // For now, we'll just show a success message
-        
-        console.log('📧 Newsletter signup:', email);
-        
-        // Show success message
-        showNotification('✅ Successfully subscribed to newsletter!', 'success');
-        
-        // Clear form
-        emailInput.value = '';
-        
-        // You can integrate with services like:
-        // - EmailJS
-        // - Mailchimp
-        // - SendGrid
-        // - ConvertKit
+function setupFilterButtons() {
+    const buttons = document.querySelectorAll('.filter-btn');
+    
+    buttons.forEach(btn => {
+        btn.addEventListener('click', function() {
+            buttons.forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+            
+            const category = this.getAttribute('data-category');
+            filterAndDisplayPosts(category);
+        });
     });
 }
 
 // ============================================
-// NOTIFICATION HELPER
+// LOAD MORE
 // ============================================
-function showNotification(message, type = 'success') {
-    const notification = document.createElement('div');
-    notification.style.cssText = `
-        position: fixed;
-        top: 100px;
-        right: 24px;
-        background: ${type === 'success' ? '#22c55e' : '#ff4757'};
-        color: white;
-        padding: 16px 24px;
-        border-radius: 12px;
-        font-weight: 600;
-        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
-        z-index: 10000;
-        animation: slideInRight 0.3s ease;
-    `;
+function setupLoadMore() {
+    const btn = document.getElementById('load-more-btn');
     
-    notification.textContent = message;
-    document.body.appendChild(notification);
-    
-    setTimeout(() => {
-        notification.style.animation = 'slideOutRight 0.3s ease';
-        setTimeout(() => notification.remove(), 300);
-    }, 3000);
+    if (btn) {
+        btn.addEventListener('click', function() {
+            currentPage++;
+            renderPosts();
+        });
+    }
 }
 
-// ============================================
-// GLOBAL FUNCTIONS
-// ============================================
-window.refreshBlogPosts = function() {
-    loadBlogPosts();
-};
+// Make functions global for debugging
+window.allPosts = allPosts;
+window.displayedPosts = displayedPosts;
+window.refreshBlog = loadBlogPosts;
 
 console.log('✅ Blog.js loaded');
-console.log('💡 Blog posts will auto-update from Contentful');
-console.log('🔄 To manually refresh: window.refreshBlogPosts()');
+console.log('💡 Debug in console: window.allPosts, window.refreshBlog()');
