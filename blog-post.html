@@ -43,6 +43,7 @@
                     <a href="blog.html" class="nav-link active">Blog</a>
                     <a href="about.html" class="nav-link">About</a>
                     <a href="contact.html" class="nav-link">Contact</a>
+                    <a href="faq.html" class="nav-link">FAQ</a>
                 </div>
                 <div class="nav-actions">
                     <button class="btn-search">
@@ -281,27 +282,50 @@
         </div>
     </footer>
 
-    <!-- Back to Top Button -->
-    <button id="back-to-top" class="back-to-top" style="display: none;">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M12 19V5M5 12l7-7 7 7"/>
-        </svg>
-    </button>
-
     <!-- Scripts -->
     <script src="script.js"></script>
   <script src="blog-post.js"></script>
+<script src="back-to-top.js"></script>
 
 
-    <!-- WhatsApp Button -->
-    <a href="https://wa.me/94742394594?text=Hello!%20I%20have%20a%20question" 
-       class="whatsapp-float" 
-       target="_blank">
-        <svg width="60" height="60" viewBox="0 0 60 60">
-            <circle cx="30" cy="30" r="28" fill="#25D366"/>
-            <path fill="white" d="M30.667 15.333c-8.284 0-15 6.716-15 15 0 2.75.742 5.324 2.036 7.542l-2.119 6.358 6.545-2.083c2.136 1.167 4.583 1.836 7.204 1.836 8.284 0 15-6.716 15-15s-6.716-15-15-15zm8.542 21.208c-.354.997-2.083 1.917-2.875 2.042-.75.125-1.708.208-2.75-.167-1.042-.375-2.375-.875-4.125-1.708-3.709-1.792-6.125-5.542-6.292-5.792-.167-.25-1.375-1.792-1.375-3.417s.875-2.417 1.167-2.75c.292-.333.667-.417.875-.417.208 0 .417 0 .583.008.188.009.438-.071.688.521.25.593.875 2.125.958 2.292.083.167.125.375.042.583-.083.208-.167.292-.333.458-.167.167-.333.375-.458.5-.167.125-.333.292-.167.542.167.25.75 1.25 1.625 2.042 1.125 1 2.083 1.333 2.375 1.458.292.125.458.125.625-.042.167-.167.708-.833.917-1.125.208-.292.417-.25.667-.167.25.083 1.583.75 1.833.875.25.125.417.167.458.292.083.125.083.708-.167 1.375z"/>
-        </svg>
-    </a>
+   <!-- WhatsApp Floating Button -->
+<a href="https://wa.me/94742394594?text=Hello!%20I%20have%20a%20question%20about%20games" 
+   class="whatsapp-float" 
+   target="_blank"
+   aria-label="Chat on WhatsApp">
+    <svg width="60" height="60" viewBox="0 0 60 60">
+        <circle cx="30" cy="30" r="28" fill="#25D366"/>
+        <path fill="white" d="M30.667 15.333c-8.284 0-15 6.716-15 15 0 2.75.742 5.324 2.036 7.542l-2.119 6.358 6.545-2.083c2.136 1.167 4.583 1.836 7.204 1.836 8.284 0 15-6.716 15-15s-6.716-15-15-15zm8.542 21.208c-.354.997-2.083 1.917-2.875 2.042-.75.125-1.708.208-2.75-.167-1.042-.375-2.375-.875-4.125-1.708-3.709-1.792-6.125-5.542-6.292-5.792-.167-.25-1.375-1.792-1.375-3.417s.875-2.417 1.167-2.75c.292-.333.667-.417.875-.417.208 0 .417 0 .583.008.188.009.438-.071.688.521.25.593.875 2.125.958 2.292.083.167.125.375.042.583-.083.208-.167.292-.333.458-.167.167-.333.375-.458.5-.167.125-.333.292-.167.542.167.25.75 1.25 1.625 2.042 1.125 1 2.083 1.333 2.375 1.458.292.125.458.125.625-.042.167-.167.708-.833.917-1.125.208-.292.417-.25.667-.167.25.083 1.583.75 1.833.875.25.125.417.167.458.292.083.125.083.708-.167 1.375z"/>
+    </svg>
+</a>
+
+<style>
+.whatsapp-float {
+    position: fixed;
+    bottom: 30px;
+    left: 30px;
+    z-index: 999999;
+    transition: transform 0.3s ease;
+    filter: drop-shadow(0 4px 12px rgba(37, 211, 102, 0.4));
+}
+
+.whatsapp-float:hover {
+    transform: scale(1.3);
+}
+
+@media (max-width: 768px) {
+    .whatsapp-float {
+        bottom: 20px;
+        left: 20px;
+    }
+    
+    .whatsapp-float svg {
+        width: 50px;
+        height: 50px;
+    }
+}
+</style>
+
 
 </body>
 </html>
