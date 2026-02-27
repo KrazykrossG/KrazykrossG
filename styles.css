@@ -5016,10 +5016,10 @@ body {
 
 /* Blog Header */
 .blog-header {
-    background: linear-gradient(135deg, #0066ff 0%, #00d9ff 50%, #5f27cd 100%);
-    padding: 120px 0 80px;
+    background: #050816;
     position: relative;
     overflow: hidden;
+    padding: 100px 0 80px;
 }
 
 .blog-header::before {
