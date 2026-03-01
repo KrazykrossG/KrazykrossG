@@ -1,4 +1,4 @@
-// Game Detail Page Functionality
+// Game Detail Page Functionality - PRICE FIX VERSION
 
 // Get game ID from URL parameter
 function getGameIdFromURL() {
@@ -58,7 +58,7 @@ function loadGameDetails() {
     const discountBadge = document.getElementById('detail-discount');
     
     if (game.originalPrice) {
-        priceOld.textContent = `$${game.originalPrice.toFixed(2)}`;
+        priceOld.textContent = `Rs. ${game.originalPrice.toFixed(2)}`;
         priceOld.style.display = 'inline';
         discountBadge.textContent = `-${game.discount}%`;
         discountBadge.style.display = 'inline-block';
@@ -67,7 +67,7 @@ function loadGameDetails() {
         discountBadge.style.display = 'none';
     }
     
-    priceCurrent.textContent = `$${game.price.toFixed(2)}`;
+    priceCurrent.textContent = `Rs. ${game.price.toFixed(2)}`;
     
     // Update quick info
     document.getElementById('detail-publisher').textContent = game.publisher;
@@ -93,15 +93,17 @@ function loadGameDetails() {
     // Load related games
     loadRelatedGames(game.id);
     
-    // Setup add to cart button
+    // Setup add to cart button - IMPROVED VERSION
     document.getElementById('add-to-cart-detail').addEventListener('click', () => {
         console.log('🎮 Add to Cart clicked on detail page');
+        console.log('Game data:', game);
         
         // Get cart from localStorage
         let cart = [];
         try {
             const savedCart = localStorage.getItem('krazykrossCart');
             cart = savedCart ? JSON.parse(savedCart) : [];
+            console.log('Current cart:', cart);
         } catch (error) {
             console.error('Error loading cart:', error);
             cart = [];
@@ -110,21 +112,42 @@ function loadGameDetails() {
         // Check if already in cart
         const existingItem = cart.find(item => item.id === game.id);
         if (existingItem) {
-            showNotification(`${game.title} is already in your cart!`, 'info');
+            console.log('⚠️ Item already in cart');
+            if (typeof showNotification === 'function') {
+                showNotification(`${game.title} is already in your cart!`, 'info');
+            } else {
+                alert(`${game.title} is already in your cart!`);
+            }
             return;
         }
+        
+        // CRITICAL: Extract numeric price correctly
+        let numericPrice = 0;
+        if (typeof game.price === 'number') {
+            numericPrice = game.price;
+        } else if (typeof game.price === 'string') {
+            // Remove all non-numeric characters except decimal point
+            numericPrice = parseFloat(game.price.replace(/[^0-9.]/g, ''));
+        }
+        
+        console.log('💰 Price extraction:');
+        console.log('  Original:', game.price);
+        console.log('  Type:', typeof game.price);
+        console.log('  Numeric:', numericPrice);
         
         // Create cart item with ALL required fields
         const cartItem = {
             id: game.id,
             title: game.title,
-            price: `Rs. ${game.price.toFixed(2)}`,
+            price: numericPrice,  // ✅ Store as NUMBER, not string!
             image: game.image,
             type: 'game',
             rentalPeriod: game.rentalPeriodDays ? `${game.rentalPeriodDays} days` : null
         };
         
-        console.log('📦 Adding to cart:', cartItem);
+        console.log('📦 Cart item created:', cartItem);
+        console.log('  Price type:', typeof cartItem.price);
+        console.log('  Price value:', cartItem.price);
         
         // Add to cart
         cart.push(cartItem);
@@ -133,6 +156,7 @@ function loadGameDetails() {
         try {
             localStorage.setItem('krazykrossCart', JSON.stringify(cart));
             console.log('✅ Cart saved to localStorage');
+            console.log('Saved cart:', JSON.parse(localStorage.getItem('krazykrossCart')));
         } catch (error) {
             console.error('Error saving cart:', error);
         }
@@ -179,7 +203,7 @@ function createGameCard(game) {
     card.className = 'game-card';
     
     const badge = game.badge ? `<div class="game-badge ${game.badge === 'Sale' ? 'sale' : ''}">${game.badge}</div>` : '';
-    const oldPrice = game.originalPrice ? `<span class="price-old">$${game.originalPrice.toFixed(2)}</span>` : '';
+    const oldPrice = game.originalPrice ? `<span class="price-old">Rs. ${game.originalPrice.toFixed(2)}</span>` : '';
     
     card.innerHTML = `
         <div class="game-image">
@@ -196,7 +220,7 @@ function createGameCard(game) {
             <div class="game-footer">
                 <div class="game-price">
                     ${oldPrice}
-                    <span class="price-current">$${game.price.toFixed(2)}</span>
+                    <span class="price-current">Rs. ${game.price.toFixed(2)}</span>
                 </div>
                 <button class="btn-add-cart">Add to Cart</button>
             </div>
@@ -210,12 +234,13 @@ function createGameCard(game) {
         }
     });
     
-    // Add to cart functionality for the button
+    // Add to cart functionality for the button - IMPROVED VERSION
     const addToCartBtn = card.querySelector('.btn-add-cart');
     addToCartBtn.addEventListener('click', (e) => {
         e.stopPropagation();
         
         console.log('🎮 Add to Cart clicked (related game)');
+        console.log('Game data:', game);
         
         // Get cart from localStorage
         let cart = [];
@@ -238,11 +263,24 @@ function createGameCard(game) {
             return;
         }
         
+        // CRITICAL: Extract numeric price correctly
+        let numericPrice = 0;
+        if (typeof game.price === 'number') {
+            numericPrice = game.price;
+        } else if (typeof game.price === 'string') {
+            // Remove all non-numeric characters except decimal point
+            numericPrice = parseFloat(game.price.replace(/[^0-9.]/g, ''));
+        }
+        
+        console.log('💰 Price extraction:');
+        console.log('  Original:', game.price);
+        console.log('  Numeric:', numericPrice);
+        
         // Create cart item with ALL required fields
         const cartItem = {
             id: game.id,
             title: game.title,
-            price: `Rs. ${game.price.toFixed(2)}`,
+            price: numericPrice,  // ✅ Store as NUMBER!
             image: game.image,
             type: 'game',
             rentalPeriod: game.rentalPeriodDays ? `${game.rentalPeriodDays} days` : null
