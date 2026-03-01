@@ -6,39 +6,45 @@
             http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
 
 <url>
-  <loc>https://krazykrossg.com/</loc>
-  <lastmod>2026-02-02T16:29:22+00:00</lastmod>
+  <loc>https://www.krazykrossg.com/</loc>
+  <lastmod>2026-03-01T14:51:06+00:00</lastmod>
   <priority>1.00</priority>
 </url>
 <url>
-  <loc>https://krazykrossg.com/games</loc>
-  <lastmod>2026-02-02T16:29:22+00:00</lastmod>
+  <loc>https://www.krazykrossg.com/games</loc>
+  <lastmod>2026-03-01T15:53:16+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://krazykrossg.com/about</loc>
-  <lastmod>2026-02-02T16:29:22+00:00</lastmod>
+  <loc>https://www.krazykrossg.com/ps-plus</loc>
+  <lastmod>2026-03-01T15:53:16+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://krazykrossg.com/contact</loc>
-  <lastmod>2026-02-02T16:29:22+00:00</lastmod>
+  <loc>https://www.krazykrossg.com/blog</loc>
+  <lastmod>2026-03-01T15:53:16+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://krazykrossg.com/faq</loc>
-  <lastmod>2026-02-02T16:29:22+00:00</lastmod>
+  <loc>https://www.krazykrossg.com/about</loc>
+  <lastmod>2026-03-01T15:53:16+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://krazykrossg.com/checkout</loc>
-  <lastmod>2026-02-02T16:29:22+00:00</lastmod>
+  <loc>https://www.krazykrossg.com/contact</loc>
+  <lastmod>2026-03-01T15:53:17+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://krazykrossg.com/ps-plus</loc>
-  <lastmod>2026-02-02T16:29:22+00:00</lastmod>
+  <loc>https://www.krazykrossg.com/faq</loc>
+  <lastmod>2026-03-01T15:53:17+00:00</lastmod>
   <priority>0.80</priority>
 </url>
+<url>
+  <loc>https://www.krazykrossg.com/checkout</loc>
+  <lastmod>2026-03-01T15:53:17+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+
 
 </urlset>
