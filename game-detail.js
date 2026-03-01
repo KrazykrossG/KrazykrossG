@@ -95,20 +95,68 @@ function loadGameDetails() {
     
     // Setup add to cart button
     document.getElementById('add-to-cart-detail').addEventListener('click', () => {
-        // Reuse the cart functionality from main script
-        if (typeof cart !== 'undefined') {
-            cart.push({
-                title: game.title,
-                price: `$${game.price.toFixed(2)}`
-            });
-            
-            if (typeof cartCount !== 'undefined') {
-                cartCount++;
-                updateCartBadge();
-            }
-            
-            showNotification(`${game.title} added to cart!`);
+        console.log('🎮 Add to Cart clicked on detail page');
+        
+        // Get cart from localStorage
+        let cart = [];
+        try {
+            const savedCart = localStorage.getItem('krazykrossCart');
+            cart = savedCart ? JSON.parse(savedCart) : [];
+        } catch (error) {
+            console.error('Error loading cart:', error);
+            cart = [];
         }
+        
+        // Check if already in cart
+        const existingItem = cart.find(item => item.id === game.id);
+        if (existingItem) {
+            showNotification(`${game.title} is already in your cart!`, 'info');
+            return;
+        }
+        
+        // Create cart item with ALL required fields
+        const cartItem = {
+            id: game.id,
+            title: game.title,
+            price: `Rs. ${game.price.toFixed(2)}`,
+            image: game.image,
+            type: 'game',
+            rentalPeriod: game.rentalPeriodDays ? `${game.rentalPeriodDays} days` : null
+        };
+        
+        console.log('📦 Adding to cart:', cartItem);
+        
+        // Add to cart
+        cart.push(cartItem);
+        
+        // Save to localStorage
+        try {
+            localStorage.setItem('krazykrossCart', JSON.stringify(cart));
+            console.log('✅ Cart saved to localStorage');
+        } catch (error) {
+            console.error('Error saving cart:', error);
+        }
+        
+        // Update cart badge
+        if (typeof updateCartBadge === 'function') {
+            updateCartBadge();
+        } else {
+            // Update badge manually
+            const badges = document.querySelectorAll('.cart-badge');
+            badges.forEach(badge => {
+                badge.textContent = cart.length;
+                badge.style.display = cart.length > 0 ? 'flex' : 'none';
+            });
+        }
+        
+        // Show notification
+        if (typeof showNotification === 'function') {
+            showNotification(`${game.title} added to cart!`, 'success');
+        } else {
+            alert(`${game.title} added to cart!`);
+        }
+        
+        console.log('✅ Item added to cart successfully');
     });
 }
 
@@ -167,19 +215,72 @@ function createGameCard(game) {
     addToCartBtn.addEventListener('click', (e) => {
         e.stopPropagation();
         
-        if (typeof cart !== 'undefined') {
-            cart.push({
-                title: game.title,
-                price: `$${game.price.toFixed(2)}`
-            });
-            
-            if (typeof cartCount !== 'undefined') {
-                cartCount++;
-                updateCartBadge();
-            }
-            
-            showNotification(`${game.title} added to cart!`);
+        console.log('🎮 Add to Cart clicked (related game)');
+        
+        // Get cart from localStorage
+        let cart = [];
+        try {
+            const savedCart = localStorage.getItem('krazykrossCart');
+            cart = savedCart ? JSON.parse(savedCart) : [];
+        } catch (error) {
+            console.error('Error loading cart:', error);
+            cart = [];
         }
+        
+        // Check if already in cart
+        const existingItem = cart.find(item => item.id === game.id);
+        if (existingItem) {
+            if (typeof showNotification === 'function') {
+                showNotification(`${game.title} is already in your cart!`, 'info');
+            } else {
+                alert(`${game.title} is already in your cart!`);
+            }
+            return;
+        }
+        
+        // Create cart item with ALL required fields
+        const cartItem = {
+            id: game.id,
+            title: game.title,
+            price: `Rs. ${game.price.toFixed(2)}`,
+            image: game.image,
+            type: 'game',
+            rentalPeriod: game.rentalPeriodDays ? `${game.rentalPeriodDays} days` : null
+        };
+        
+        console.log('📦 Adding to cart:', cartItem);
+        
+        // Add to cart
+        cart.push(cartItem);
+        
+        // Save to localStorage
+        try {
+            localStorage.setItem('krazykrossCart', JSON.stringify(cart));
+            console.log('✅ Cart saved to localStorage');
+        } catch (error) {
+            console.error('Error saving cart:', error);
+        }
+        
+        // Update cart badge
+        if (typeof updateCartBadge === 'function') {
+            updateCartBadge();
+        } else {
+            // Update badge manually
+            const badges = document.querySelectorAll('.cart-badge');
+            badges.forEach(badge => {
+                badge.textContent = cart.length;
+                badge.style.display = cart.length > 0 ? 'flex' : 'none';
+            });
+        }
+        
+        // Show notification
+        if (typeof showNotification === 'function') {
+            showNotification(`${game.title} added to cart!`, 'success');
+        } else {
+            alert(`${game.title} added to cart!`);
+        }
+        
+        console.log('✅ Item added to cart successfully');
     });
     
     return card;
